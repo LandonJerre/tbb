@@ -93,6 +93,22 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_debug</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)_debug</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)..\lib\include;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\ucrt;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\um;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\shared;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\SharedCode\Dependencies\lib\Windows\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)..\lib\include;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\ucrt;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\um;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\shared;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\SharedCode\Dependencies\lib\Windows\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)..\lib\include;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\ucrt;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\um;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\shared;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\SharedCode\Dependencies\lib\Windows\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)..\lib\include;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\ucrt;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\um;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\shared;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\SharedCode\Dependencies\lib\Windows\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions> /c /MDd /Od /Ob0 /Zi /EHsc /GR /Zc:forScope /Zc:wchar_t /DTBB_USE_DEBUG /D__TBB_LIB_NAME=tbb_debug.lib /DDO_ITT_NOTIFY /GS /DUSE_WINTHREAD /D_CRT_SECURE_NO_DEPRECATE /D_WIN32_WINNT=0x0502 /D__TBBMALLOC_BUILD=1 /I../../src /I../../src/rml/include /I../../include /I../../src/tbbmalloc /I../../src/tbbmalloc /I.</AdditionalOptions>
