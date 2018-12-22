@@ -72,7 +72,7 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\Executables\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Temp\$(ProjectName)\$(PlatformTarget)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)Sources\$(ProjectName)\Lib\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\Executables\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)Temp\$(ProjectName)\$(PlatformTarget)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\Executables\$(PlatformTarget)\$(Configuration)\</OutDir>
@@ -90,8 +90,8 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_debug</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)_debug</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)..\lib\include;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\ucrt;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\um;$(SolutionDir)..\SharedCode\Dependencies\include\Windows\shared;$(IncludePath)</IncludePath>
@@ -125,7 +125,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/DLL /MAP /DEBUG /fixed:no /INCREMENTAL:NO  /DEF:"$(IntDir)tbb.def" %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>$(OutDir)tbb_debug.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -133,6 +133,12 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>del $(OutDir)$(ProjectName).lib
+del $(OutDir)$(ProjectName).exp
+%systemroot%\System32\xcopy.exe "$(OutDir)$(ProjectName).dll" "$(SolutionDir)..\SharedBinaries\EngineBinaries\$(PlatformTarget)\$(Configuration)\" /s /i /y
+%systemroot%\System32\xcopy.exe "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\SharedBinaries\EngineBinaries\$(PlatformTarget)\$(Configuration)\" /s /i /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -152,7 +158,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/nologo /DLL /MAP /DEBUG /fixed:no /INCREMENTAL:NO  /DEF:"$(IntDir)tbb.def" %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>$(OutDir)tbb_debug.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -160,7 +166,14 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImportLibrary>$(SolutionDir)Sources\$(ProjectName)\Lib\$(PlatformTarget)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>del $(OutDir)$(ProjectName).lib
+del $(OutDir)$(ProjectName).exp
+%systemroot%\System32\xcopy.exe "$(OutDir)$(ProjectName).dll" "$(SolutionDir)..\SharedBinaries\EngineBinaries\$(PlatformTarget)\$(Configuration)\" /s /i /y
+%systemroot%\System32\xcopy.exe "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\SharedBinaries\EngineBinaries\$(PlatformTarget)\$(Configuration)\" /s /i /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -175,7 +188,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/nologo /DLL /MAP /DEBUG /fixed:no /INCREMENTAL:NO  /DEF:"$(IntDir)tbb.def" %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>$(OutDir)tbb.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -185,6 +198,11 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>del $(OutDir)$(ProjectName).lib
+del $(OutDir)$(ProjectName).exp
+%systemroot%\System32\xcopy.exe "$(OutDir)$(ProjectName).dll" "$(SolutionDir)..\SharedBinaries\EngineBinaries\$(PlatformTarget)\$(Configuration)\" /s /i /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -200,7 +218,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/nologo /DLL /MAP /DEBUG /fixed:no /INCREMENTAL:NO /DEF:"$(IntDir)tbb.def" %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>$(OutDir)tbb.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -210,7 +228,13 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImportLibrary>$(SolutionDir)Sources\$(ProjectName)\Lib\$(PlatformTarget)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>del $(OutDir)$(ProjectName).lib
+del $(OutDir)$(ProjectName).exp
+%systemroot%\System32\xcopy.exe "$(OutDir)$(ProjectName).dll" "$(SolutionDir)..\SharedBinaries\EngineBinaries\$(PlatformTarget)\$(Configuration)\" /s /i /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <MASM Include="..\..\src\tbb\ia32-masm\atomic_support.asm">
