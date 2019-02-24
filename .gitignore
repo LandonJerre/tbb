@@ -84,3 +84,4 @@ CMakeFiles/
 .svn
 crash*
 *.tmp
+*.user

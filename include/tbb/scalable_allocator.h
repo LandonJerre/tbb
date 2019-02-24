@@ -323,11 +323,7 @@ inline bool operator!=( const scalable_allocator<T>&, const scalable_allocator<U
     #endif
 
     #if !__TBBMALLOC_NO_IMPLICIT_LINKAGE
-        #ifdef _DEBUG
-            #pragma comment(lib, "tbbmalloc_debug.lib")
-        #else
-            #pragma comment(lib, "tbbmalloc.lib")
-        #endif
+        #pragma comment(lib, "tbbmalloc.lib")
     #endif
 
 
